@@ -3,7 +3,7 @@ I regularly play Sanuli (Finnish Wordle: https://sanuli.fi/), but I got stuck wi
 Implemented on Python version 3.11.5, on 64-bit Windows 10.
 
 ## First, download and unzip the Kotus library that Sanuli uses.
-The library is found in: https://kaino.kotus.fi/sanat/nykysuomi/.
+The library is found in: https://kaino.kotus.fi/sanat/nykysuomi/kotus-sanalista-v1.zip.
 
 
 ## Fire up your cmd.
