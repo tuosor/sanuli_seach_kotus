@@ -3,6 +3,25 @@
 import numpy as np
 import pandas as pd
 
+# Function to filter according to number of characters
+def howManyLetters(df,num_letters):
+   new_df = df[df[num_letters] =='']
+   for i in range(num_letters-1,-1,-1):
+      new_df = new_df[new_df[i] !='']
+   return new_df
+
+# Function to filter based on possible location of character
+def charPossiblePlace(df,char,digits):
+   new_df = df.copy(deep=True)
+   total_df = None
+   for digit in digits:
+      sub_df = new_df[new_df[digit]==char]
+      if total_df is None: total_df = sub_df
+      else: total_df = pd.concat([total_df,sub_df],axis=0)
+   total_df = total_df.drop_duplicates()
+   return total_df
+   
+
 KOTUS_FILE_PATH = 'kotus-sanalista_v1.xml'
 
 # Read
@@ -57,3 +76,14 @@ new_df1 = new_df1[~new_df1[4].isin(vowels)]
 new_df1 = new_df1[~new_df1[5].isin(vowels)]
 print(new_df1) # One entry found: 'squash'. Hooray!
 
+
+# Searching again, 13.1.2024
+new_df2 = howManyLetters(df,6)
+
+new_df2 = new_df2[new_df2[1]=='a']
+new_df2 = charPossiblePlace(new_df2,'u',[0,2,4,5])
+new_df2 = charPossiblePlace(new_df2,'i',[0,2,3])
+new_df2 = charPossiblePlace(new_df2,'t',[0,3,4,5])
+new_df2 = charPossiblePlace(new_df2,'n',[0,3,4,5])
+
+print(new_df2) # One entry found: 'nainut'. Hooray!
