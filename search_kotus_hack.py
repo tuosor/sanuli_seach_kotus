@@ -3,12 +3,13 @@
 import numpy as np
 import pandas as pd
 import itertools
+EMPTY_CHAR = '_'
 
 # Function to filter according to number of characters
 def howManyLetters(df,num_letters):
-   new_df = df[df[num_letters] =='']
+   new_df = df[df[num_letters] ==EMPTY_CHAR]
    for i in range(num_letters-1,-1,-1):
-      new_df = new_df[new_df[i] !='']
+      new_df = new_df[new_df[i] !=EMPTY_CHAR]
    return new_df
 
 # Function to filter based on possible location of character.
@@ -66,7 +67,7 @@ for row in row_list:
       max_letters = len(parsed_row)
 
 # Format to array
-arr = np.empty((len(parsed_row_list),max_letters),dtype='str')
+arr = np.full((len(parsed_row_list),max_letters),EMPTY_CHAR,dtype='str')
 for i in range(0,len(parsed_row_list)):
    #row = list(parsed_row_list[i])
    row = list(parsed_row_list[i].lower())
@@ -83,7 +84,7 @@ vowels = ['a','e','i','o','u','y','ä','ö','å']
 # with 'a' as 4th letter and
 # 'u' as possibly 6th letter.
 # No other vowels.
-new_df = df[df[6] =='']
+new_df = df[df[6] ==EMPTY_CHAR]
 new_df = new_df[new_df[3] == 'a']
 new_df = new_df[new_df[5] == 'u']
 new_df = new_df[~new_df[0].isin(vowels)]
@@ -96,7 +97,7 @@ print(new_df) # No entries, trying the second possibility
 # with 'a' as 4th letter and
 # 'u' as possibly 3rd letter.
 # No other vowels.
-new_df1 = df[df[6] =='']
+new_df1 = df[df[6] ==EMPTY_CHAR]
 new_df1 = new_df1[new_df1[3] == 'a']
 new_df1 = new_df1[new_df1[2] == 'u']
 new_df1 = new_df1[~new_df1[0].isin(vowels)]
@@ -118,7 +119,7 @@ new_df2 = charPossiblePlace(new_df2,'n',[0,3,4,5])
 print(new_df2) # One entry found: 'nainut'. Hooray!
 
 
-# Sanity check, 14.1.2024. Works as intended
+# Sanity check. Works as intended
 new_df3 = howManyLetters(df,4)
 new_df3 = charPossiblePlace(new_df3,'t',[0,2])
 new_df3 = charPossiblePlace(new_df3,'o',[1,3])
