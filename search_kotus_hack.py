@@ -50,6 +50,32 @@ def multiCharPossiblePlace(df,char,digits,num_instances):
    return total_df
 
 
+# Function to filter based on possible location of character,
+# taking into account the possibility of two or more instances of it.
+# In addition, take into account the possibility for a list of number of instances.
+def multiCharMultiPossiblePlace(df,char,digits,num_instances_list):
+   new_df = df.copy(deep=True)
+   total_df = None
+   combinations = []
+   for num_instances in num_instances_list:
+      combinations = combinations + list(itertools.combinations(digits,num_instances))
+   for combination in combinations:
+      sub_df = None
+      for location in digits:
+         if location in combination:
+            if sub_df is None: sub_df = new_df[new_df[location]==char]
+            else: sub_df = sub_df[sub_df[location]==char]
+         else:
+            if sub_df is None: sub_df = new_df[new_df[location]!=char]
+            else: sub_df = sub_df[sub_df[location]!=char]
+      if total_df is None: total_df = sub_df
+      else: total_df = pd.concat([total_df,sub_df],axis=0)
+   # Digits tell the possible places, now get rid of impossible ones.
+   for col in total_df:
+      if col not in digits:
+         total_df = total_df[total_df[col]!=char]
+   return total_df
+
 KOTUS_FILE_PATH = 'kotus-sanalista_v1.xml'
 
 # Read
@@ -140,3 +166,10 @@ new_df6 = multiCharPossiblePlace(new_df6,'t',[0,2,4],2)
 new_df6 = multiCharPossiblePlace(new_df6,'o',[1,3],2)
 # Returns only "lotota". Hooray!
 
+
+# Search again, 23.3.2024
+new_dfa = howManyLetters(df,6)
+new_dfa = new_dfa[new_dfa[1]=='e']
+new_dfa = multiCharMultiPossiblePlace(new_dfa,'t',[0,2,3,5],[1,2,3])
+new_dfa = multiCharMultiPossiblePlace(new_dfa,'o',[0,2,3,4],[1,2,3])
+new_dfa = multiCharMultiPossiblePlace(new_dfa,'n',[0,3,4,5],[1,2,3])
