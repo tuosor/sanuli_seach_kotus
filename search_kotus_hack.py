@@ -173,3 +173,10 @@ new_dfa = new_dfa[new_dfa[1]=='e']
 new_dfa = multiCharMultiPossiblePlace(new_dfa,'t',[0,2,3,5],[1,2,3])
 new_dfa = multiCharMultiPossiblePlace(new_dfa,'o',[0,2,3,4],[1,2,3])
 new_dfa = multiCharMultiPossiblePlace(new_dfa,'n',[0,3,4,5],[1,2,3])
+
+new_dfb = howManyLetters(df,6)
+new_dfb = multiCharMultiPossiblePlace(new_dfb,'i',[0,3,5],[1,2,3])
+new_dfb = multiCharMultiPossiblePlace(new_dfb,'n',[1,2,3,4,5],[1,2,3,4,5])
+new_dfb = multiCharMultiPossiblePlace(new_dfb,'m',[0,1,2,4,5],[1,2,3,4,5])
+new_dfb = multiCharMultiPossiblePlace(new_dfb,'u',[0,2,3,4,5],[1,2,3,4,5])
+new_dfb = multiCharMultiPossiblePlace(new_dfb,'d',[0,1,2,4,5],[1,2,3,4,5])
